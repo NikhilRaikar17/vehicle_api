@@ -19,14 +19,16 @@
     ],
     "tags": [
         {
-          "name": "Vehicle Request",
-          "description": "Example API for requesting and return vehicle data"
+          "name": "Vehicle Request"
         }
     ],
     "paths": {
         
         "/add_vehicle":{
             "post": {
+                "tags": [
+                    "Vehicle Request"
+                  ],
                 "summary": "Create a new vehicle",
                 "requestBody": {
                   "description": "Vehicle Request Post Object",
