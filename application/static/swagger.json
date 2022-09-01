@@ -23,6 +23,22 @@
     }
   ],
   "paths": {
+    "/status": {
+      "get": {
+        "tags": [
+          "Vehicle Request"
+        ],
+        "summary": "Check whether the end points are working",
+        "requestBody": {
+          "description": "Status of endpoints"
+        },
+        "produces": [
+          "application/json"
+        ],
+        "responses": {}
+      }
+
+    },
     "/vehicle": {
       "post": {
         "tags": [
@@ -67,7 +83,7 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/VehicleRequestPostBody"
+                "$ref": "#/components/schemas/VehicleRequestPutBody"
               }
             }
           }
@@ -99,13 +115,90 @@
         ],
         "responses": {}
       }
+    },
+    "/search": {
+      "get": {
+        "parameters": [
+          {
+            "name": "vehicle_name",
+            "in": "query",
+            "description": "Name of vehicle",
+            "type": "string"
+          },
+          {
+            "name": "vehicle_brand",
+            "in": "query",
+            "description": "Brand of vehicle",
+            "type": "string"
+          },
+          {
+            "name": "year_of_manufacture",
+            "in": "query",
+            "description": "Year of manufacturer of vehicle",
+            "type": "integer"
+          },
+          {
+            "name": "ready_to_drive",
+            "in": "query",
+            "description": "Whether a vehicle is ready to be driven or not",
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "Vehicle Request"
+        ],
+        "summary": "Seaerch for a vehicle based on certain attributes",
+        "requestBody": {
+          "description": "Search for a vehicle"
+        },
+        "produces": [
+          "application/json"
+        ],
+        "responses": {}
+      }
     }
+
   },
   "components": {
     "schemas": {
+      "Vehicle_id": {
+        "properties": {
+          "vehicle_id": {
+            "type": "integer"
+          }
+        }
+      },
       "VehicleRequestPostBody": {
         "type": "object",
         "properties": {
+          "vehicle_name": {
+            "type": "string",
+            "format": "string"
+          },
+          "vehicle_brand": {
+            "type": "string",
+            "format": "string"
+          },
+          "vehicle_description": {
+            "type": "string",
+            "format": "string"
+          },
+          "year_of_manufacture": {
+            "type": "integer",
+            "format": "YYYY"
+          },
+          "ready_to_drive": {
+            "type": "boolean",
+            "format": "1 or 0"
+          }
+        }
+      },
+      "VehicleRequestPutBody": {
+        "type": "object",
+        "properties": {
+          "vehicle_id": {
+            "type": "integer"
+          },
           "vehicle_name": {
             "type": "string",
             "format": "string"
