@@ -99,3 +99,24 @@ def get_all_vehicles():
     """Gets all the vehicle information present"""
     all_vehicles = Vehicle.query.all()
     return json.dumps(Vehicle.serialize_list(all_vehicles))
+
+@vehicle_api_blueprint.route('/search', methods=['GET'])
+def search_vehicles():
+    try:
+        name = request.args.get('vehicle_name', default='').strip()
+        brand = request.args.getlist('vehicle_brand')
+        year_of_manufacture = request.args.getlist('year_of_manufacture', type=int)
+        ready_to_drive = request.form.get('ready_to_drive', type=bool, default=False)
+
+        error,message,vehicles = vehicle_service.search(name,brand,year_of_manufacture,ready_to_drive)
+        if error:
+            raise Exception(message)
+
+        return json.dumps(Vehicle.serialize_list(vehicles.all()))
+
+
+    except Exception as e:
+        message = e.args[0]
+        if message:
+            return message
+        return "Search functionality not working"
