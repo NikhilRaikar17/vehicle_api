@@ -24,6 +24,38 @@ def get_vehicle_by_brand(brand):
 
     return False
 
+def get_vehicles_by_name(vehicle_query,name):
+    """Get vehicles from name"""
+    vehicles_by_name = vehicle_query.filter(
+                                            Vehicle.name==name
+                                            )
+    return vehicles_by_name
+
+def get_vehicles_by_brands(vehicle_query,brand):
+    """Get vehicles from brands"""
+    vehicles_by_brands = vehicle_query.filter(
+                                            Vehicle.brand.in_(brand)
+                                            )
+    return vehicles_by_brands
+
+def get_vehicles_by_manufacturer_year(vehicle_query,year_of_manufacture):
+    """Get vehicles from year of manufacturer"""
+    vehicles_by_manufacturer_year = vehicle_query.filter(
+                                            Vehicle.year_of_manufacture.in_(year_of_manufacture)
+                                            )
+    return vehicles_by_manufacturer_year
+
+def get_vehicles_by_ready_to_drive(vehicle_query,ready_to_drive):
+    """Get vehicles from year of ready_to_drive"""
+    vehicles_by_ready_to_drive = vehicle_query.filter(
+                                                    Vehicle.ready_to_drive == ready_to_drive
+                                                    )
+    return vehicles_by_ready_to_drive
+
+def get_all_vehicles():
+    """Get all vehicles"""
+    return Vehicle.query
+
 def get_vehicle_by_id(vehicle_id):
     """Get a vehicle object from id"""
     vehicle = Vehicle.query.filter_by(
