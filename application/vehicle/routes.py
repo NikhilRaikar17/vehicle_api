@@ -11,8 +11,6 @@ from application.vehicle.service import vehicle_service
 from flask_sqlalchemy import SQLAlchemy
 from application import create_app,db
 
-
-
 app = create_app()
 db = SQLAlchemy(app)
 
@@ -22,7 +20,7 @@ def status():
     """Checks whether the route is active"""
     return jsonify({'status':"Active!"})
 
-@vehicle_api_blueprint.route('/add_vehicle', methods=['POST'])
+@vehicle_api_blueprint.route('/vehicle', methods=['POST'])
 def add_vehicle():
     """Adds a new vehicle"""
     try:
@@ -58,10 +56,10 @@ def add_vehicle():
                     "message":"Vehicle could not be created!"
                     })
 
-@app.route('/update_vehicle', methods=['PUT'])
-def update_vehicle():
+@vehicle_api_blueprint.route('/vehicle/<int:vehicle_id>', methods=['PUT'])
+def update_vehicle(vehicle_id):
+    """Update vehicle details by vehicle identification number"""
     try:
-        vehicle_id = request.args.get('id')
         name = request.form.get('vehicle_name')
         brand = request.form.get('vehicle_brand')
         description = request.form.get('vehicle_description')
@@ -97,8 +95,14 @@ def update_vehicle():
 @vehicle_api_blueprint.route('/vehicles', methods=['GET'])
 def get_all_vehicles():
     """Gets all the vehicle information present"""
-    all_vehicles = Vehicle.query.all()
+    all_vehicles = vehicle_service.get_vehicles()
     return json.dumps(Vehicle.serialize_list(all_vehicles))
+
+@vehicle_api_blueprint.route('/vehicle/<int:vehicle_id>', methods=['GET'])
+def get_specific_vehicles(vehicle_id):
+    """Gets single vehicle information """
+    vehicle = vehicle_service.get_vehicle(vehicle_id)
+    return json.dumps(Vehicle.serialize_list(vehicle))
 
 @vehicle_api_blueprint.route('/search', methods=['GET'])
 def search_vehicles():
