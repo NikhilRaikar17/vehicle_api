@@ -1,8 +1,9 @@
 from application.models import Vehicle
 
-def get_vehicle(brand,description,year_of_manufacture,ready_to_drive):
+def get_vehicle(name,brand,description,year_of_manufacture,ready_to_drive):
     """Get a vehicle object from the database"""
     vehicle = Vehicle.query.filter_by(
+                                    name=name,
                                     brand=brand,
                                     description=description,
                                     year_of_manufacture=year_of_manufacture,
@@ -27,6 +28,18 @@ def get_vehicle_by_id(vehicle_id):
     """Get a vehicle object from id"""
     vehicle = Vehicle.query.filter_by(
                                     id=vehicle_id,
+                                    ).first()
+    if vehicle:
+        return True
+
+    return False
+
+def get_duplicate_vehicle(name,brand,year_of_manufacture):
+    """Get a vehicle object from id"""
+    vehicle = Vehicle.query.filter_by(
+                                    name=name,
+                                    brand=brand,
+                                    year_of_manufacture=year_of_manufacture
                                     ).first()
     if vehicle:
         return True
