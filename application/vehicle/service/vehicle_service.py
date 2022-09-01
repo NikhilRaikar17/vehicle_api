@@ -35,16 +35,16 @@ def validate_vehicle(brand,description,year_of_manufacture,ready_to_drive):
             return True, message, None
         return True, "The vehicle could not be added to the database!", None
 
-def add(db,brand,description,year_of_manufacture,ready_to_drive):
+def add(db,name,brand,description,year_of_manufacture,ready_to_drive):
     """Adds a new vehicle"""
     try:
-        is_vehicle = vehicle_helpers.get_vehicle(brand,description,year_of_manufacture,ready_to_drive)
+        is_vehicle = vehicle_helpers.get_vehicle(name,brand,description,year_of_manufacture,ready_to_drive)
         if is_vehicle:
            raise Exception("Vehicle already exists!") 
         
-        has_brand = vehicle_helpers.get_vehicle_by_brand(brand)
-        if has_brand:
-           raise Exception("Vehicle with same brand already exists!")
+        duplicate_vehicle = vehicle_helpers.get_duplicate_vehicle(name,brand,year_of_manufacture)
+        if duplicate_vehicle:
+            raise Exception("Same name and brand of vehicle exists")
 
         error,message,valid_vehicle = validate_vehicle(brand,description,year_of_manufacture,ready_to_drive)
         if error:
@@ -53,7 +53,7 @@ def add(db,brand,description,year_of_manufacture,ready_to_drive):
         new_vehicle = vehicle_helpers.create_vehicle(db, valid_vehicle)
         if not new_vehicle:
             raise Exception("Vehicle could not be added into the database")
-            
+
         return None, "Vehicle successfully added!"
     except Exception as e:
         message = e.args[0]
