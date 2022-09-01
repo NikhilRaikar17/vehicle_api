@@ -2,7 +2,8 @@
 This is a small flask web application api which contains vehicles data. A vehicle contains basic configurations such as its name,brand,description etc.. .We can add,update or search a vehicle based on its general attributes.
 
 ## Project Structure
-The Python Flask based microservices project is composed of the following: 
+![ArchitectureDiagram](images/architecture_diagram.PNG)
+The Python Flask based project is composed of the following: 
 
 * [VehicleApi](#Vehicle-API)
 
