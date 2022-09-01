@@ -1,7 +1,16 @@
 from application import db
+from sqlalchemy.inspection import inspect
 
+class Serializer(object):
 
-class Vehicle(db.Model):
+    def serialize(self):
+        return {each: getattr(self, each) for each in inspect(self).attrs.keys()}
+
+    @staticmethod
+    def serialize_list(list_):
+        return [element.serialize() for element in list_]
+
+class Vehicle(db.Model,Serializer):
     __tablename__ = 'vehicle'
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(),nullable=False)
