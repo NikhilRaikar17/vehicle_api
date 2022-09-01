@@ -62,18 +62,18 @@ def get_vehicle_by_id(vehicle_id):
                                     id=vehicle_id,
                                     ).first()
     if vehicle:
-        return True
+        return vehicle
 
     return False
 
-def get_duplicate_vehicle(name,brand,year_of_manufacture):
+def get_duplicate_vehicle(vehicle_id,name,brand,year_of_manufacture):
     """Get a vehicle object from id"""
     vehicle = Vehicle.query.filter_by(
                                     name=name,
                                     brand=brand,
                                     year_of_manufacture=year_of_manufacture
                                     ).first()
-    if vehicle:
+    if vehicle and vehicle.id != vehicle_id:
         return True
 
     return False
@@ -93,6 +93,9 @@ def create_vehicle(db,valid_vehicle):
 def update_vehicle(db,valid_vehicle,old_vehicle):
     """Check and update proper vehicle attribute"""
     try:
+        if old_vehicle.name != valid_vehicle.name:
+            old_vehicle.name = valid_vehicle.name
+
         if old_vehicle.brand != valid_vehicle.brand:
             old_vehicle.brand = valid_vehicle.brand
         
@@ -108,6 +111,7 @@ def update_vehicle(db,valid_vehicle,old_vehicle):
         db.session.commit()
         return True
     except Exception as e:
+        print(e)
         db.session.rollback()
         db.session.flush()
         return False
