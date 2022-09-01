@@ -4,6 +4,7 @@ currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 from vehicle.entities.vehicle_entities import ValidVehicle
+from vehicle.helpers import vehicle_helpers
 
 def validate_vehicle(brand,description,year_of_manufacture,ready_to_drive):
     try:        
@@ -16,6 +17,14 @@ def validate_vehicle(brand,description,year_of_manufacture,ready_to_drive):
         if not ready_to_drive:
             raise Exception("Please add a ready to drive!")
         
+        is_vehicle = vehicle_helpers.get_vehicle(brand,description,year_of_manufacture,ready_to_drive)
+        if is_vehicle:
+           raise Exception("Vehicle already exists!") 
+        
+        has_brand = vehicle_helpers.get_vehicle_brand(brand)
+        if has_brand:
+           raise Exception("Vehicle with same brand already exists!") 
+
         if len(brand) < 4:
             raise Exception("Brand name is too short")
         
