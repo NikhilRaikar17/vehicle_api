@@ -1,0 +1,76 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "description": "This is a small application to create vehicle information",
+      "version": "1.0.0",
+      "title": "IONOS Swagger API",
+      "contact": {
+        "email": "nikhilraikar88@gmail.com"
+      },
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "servers": [
+        {
+          "url": "/"
+        }
+    ],
+    "tags": [
+        {
+          "name": "Vehicle Request",
+          "description": "Example API for requesting and return vehicle data"
+        }
+    ],
+    "paths": {
+        
+        "/add_vehicle":{
+            "post": {
+                "summary": "Create a new vehicle",
+                "requestBody": {
+                  "description": "Vehicle Request Post Object",
+                  "required": true,
+                  "content": {
+                    "multipart/form-data": {
+                      "schema": {
+                        "$ref": "#/components/schemas/VehicleRequestPostBody"
+                      }
+                    }
+                  }
+                },
+                "produces": [
+                  "application/json"
+                ],
+                "responses": {
+                }
+              }
+        }
+    },
+    
+    "components": {
+        "schemas": {
+          "VehicleRequestPostBody": {
+            "type": "object",
+            "properties": {
+              "vehicle_brand": {
+                "type": "string",
+                "format": "string"
+              },
+              "vehicle_description": {
+                "type": "string",
+                "format": "string"
+              },
+              "year_of_manufacture": {
+                "type": "integer",
+                "format": "YYYY"
+              },
+              "ready_to_drive": {
+                "type": "boolean",
+                "format": "1 or 0"
+              }
+            }
+          }
+        }
+    }
+}
