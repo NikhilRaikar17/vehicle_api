@@ -37,7 +37,6 @@
         ],
         "responses": {}
       }
-
     },
     "/vehicle": {
       "post": {
@@ -59,7 +58,20 @@
         "produces": [
           "application/json"
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/components/schemas/VehicleResponseBody"
+            }
+          },
+          "404": {
+            "description": "Invalid Request/method"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/vehicle/{vehicle_id}": {
@@ -91,7 +103,20 @@
         "produces": [
           "application/json"
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/components/schemas/VehicleResponseBody"
+            }
+          },
+          "404": {
+            "description": "Invalid Request/method"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       },
       "get": {
         "parameters": [
@@ -108,12 +133,25 @@
         ],
         "summary": "Get details of a vehicle",
         "requestBody": {
-          "description": "Vehicle Request Post Object",
+          "description": "Vehicle Request Post Object"
         },
         "produces": [
           "application/json"
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/components/schemas/GetVehicleResponseBody"
+            }
+          },
+          "404": {
+            "description": "Invalid Request/method"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/search": {
@@ -157,7 +195,6 @@
         "responses": {}
       }
     }
-
   },
   "components": {
     "schemas": {
@@ -198,6 +235,52 @@
         "properties": {
           "vehicle_id": {
             "type": "integer"
+          },
+          "vehicle_name": {
+            "type": "string",
+            "format": "string"
+          },
+          "vehicle_brand": {
+            "type": "string",
+            "format": "string"
+          },
+          "vehicle_description": {
+            "type": "string",
+            "format": "string"
+          },
+          "year_of_manufacture": {
+            "type": "integer",
+            "format": "YYYY"
+          },
+          "ready_to_drive": {
+            "type": "boolean",
+            "format": "1 or 0"
+          }
+        }
+      },
+      "VehicleResponseBody": {
+        "type": "json",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "format": "integer"
+          },
+          "Error": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+      },
+      "GetVehicleResponseBody": {
+        "type": "json",
+        "properties": {
+          "vehicle_id": {
+            "type": "integer",
+            "format": "integer"
           },
           "vehicle_name": {
             "type": "string",
