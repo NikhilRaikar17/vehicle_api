@@ -7,11 +7,12 @@ class Serializer(object):
         return {each: getattr(self, each) for each in inspect(self).attrs.keys()}
 
     @staticmethod
-    def serialize_list(list_):
-        return [element.serialize() for element in list_]
+    def serialize_list(list_objects):
+        return [object_.serialize() for object_ in list_objects]
 
 class Vehicle(db.Model,Serializer):
     __tablename__ = 'vehicle'
+    
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(),nullable=False)
     brand = db.Column(db.String(),nullable=False)
