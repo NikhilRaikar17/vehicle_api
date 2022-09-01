@@ -75,7 +75,7 @@ def update(db,vehicle_id,name,brand,description,year_of_manufacture,ready_to_dri
         if duplicate_vehicle:
             raise Exception("Same name,brand and manufacture year of vehicle exists")
         
-        error,message,valid_vehicle = validate_vehicle(db,brand,description,year_of_manufacture,ready_to_drive)
+        error,message,valid_vehicle = validate_vehicle(db,name,brand,description,year_of_manufacture,ready_to_drive)
         if error:
             raise Exception(message)
         
