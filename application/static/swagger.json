@@ -192,7 +192,20 @@
         "produces": [
           "application/json"
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/components/schemas/SearchResponseBody"
+            }
+          },
+          "404": {
+            "description": "Invalid Request/method"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     }
   },
