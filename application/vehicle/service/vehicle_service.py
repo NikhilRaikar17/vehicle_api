@@ -6,9 +6,12 @@ sys.path.append(parentdir)
 from vehicle.entities.vehicle_entities import ValidVehicle
 from vehicle.helpers import vehicle_helpers
 
-def validate_vehicle(brand,description,year_of_manufacture,ready_to_drive):
+def validate_vehicle(name,brand,description,year_of_manufacture,ready_to_drive):
     """Validates whether the information sent conforms to proper vehicle"""
     try:        
+        if not name:
+            raise Exception("Please add a vehicle name!")
+
         if not brand:
             raise Exception("Please add a brand name!")
 
@@ -28,7 +31,7 @@ def validate_vehicle(brand,description,year_of_manufacture,ready_to_drive):
         if not isinstance(ready_to_drive, bool):
             raise Exception("Ready to drive needs to be a boolean")
         
-        return False, None, ValidVehicle(brand,description,year_of_manufacture,ready_to_drive)
+        return False, None, ValidVehicle(name,brand,description,year_of_manufacture,ready_to_drive)
     except Exception as e:
         message = e.args[0]
         if message:
@@ -46,7 +49,7 @@ def add(db,name,brand,description,year_of_manufacture,ready_to_drive):
         if duplicate_vehicle:
             raise Exception("Same name,brand and manufacture year of vehicle exists")
 
-        error,message,valid_vehicle = validate_vehicle(brand,description,year_of_manufacture,ready_to_drive)
+        error,message,valid_vehicle = validate_vehicle(name,brand,description,year_of_manufacture,ready_to_drive)
         if error:
             raise Exception(message)
 
