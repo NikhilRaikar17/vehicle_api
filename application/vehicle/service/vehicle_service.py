@@ -7,6 +7,7 @@ from vehicle.entities.vehicle_entities import ValidVehicle
 from vehicle.helpers import vehicle_helpers
 
 def validate_vehicle(brand,description,year_of_manufacture,ready_to_drive):
+    """Validates whether the information sent conforms to proper vehicle"""
     try:        
         if not brand:
             raise Exception("Please add a brand name!")
@@ -41,3 +42,20 @@ def validate_vehicle(brand,description,year_of_manufacture,ready_to_drive):
         if message:
             return True, message, None
         return True, "The vehicle could not be added to the database!", None
+
+def add(db,brand,description,year_of_manufacture,ready_to_drive):
+    """Adds a new vehicle"""
+    try:
+        error,message,valid_vehicle = validate_vehicle(brand,description,year_of_manufacture,ready_to_drive)
+        if error:
+            raise Exception(message)
+        
+        new_vehicle = vehicle_helpers.create_vehicle(db, valid_vehicle)
+        if not new_vehicle:
+            raise Exception("Vehicle could not be added into the database")
+        return None, "Vehicle successfully added!"
+    except Exception as e:
+        message = e.args[0]
+        if message:
+            return True, message
+        return True, "The vehicle could not be added to the database!"
