@@ -1,78 +1,133 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-      "description": "This is a small application to create vehicle information",
-      "version": "1.0.0",
-      "title": "IONOS Swagger API",
-      "contact": {
-        "email": "nikhilraikar88@gmail.com"
-      },
-      "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
-      }
+  "openapi": "3.0.0",
+  "info": {
+    "description": "This is a small application to create vehicle information",
+    "version": "1.0.0",
+    "title": "IONOS Swagger API",
+    "contact": {
+      "email": "nikhilraikar88@gmail.com"
     },
-    "servers": [
-        {
-          "url": "/"
-        }
-    ],
-    "tags": [
-        {
-          "name": "Vehicle Request"
-        }
-    ],
-    "paths": {
-        
-        "/add_vehicle":{
-            "post": {
-                "tags": [
-                    "Vehicle Request"
-                  ],
-                "summary": "Create a new vehicle",
-                "requestBody": {
-                  "description": "Vehicle Request Post Object",
-                  "required": true,
-                  "content": {
-                    "multipart/form-data": {
-                      "schema": {
-                        "$ref": "#/components/schemas/VehicleRequestPostBody"
-                      }
-                    }
-                  }
-                },
-                "produces": [
-                  "application/json"
-                ],
-                "responses": {
-                }
-              }
-        }
-    },
-    
-    "components": {
-        "schemas": {
-          "VehicleRequestPostBody": {
-            "type": "object",
-            "properties": {
-              "vehicle_brand": {
-                "type": "string",
-                "format": "string"
-              },
-              "vehicle_description": {
-                "type": "string",
-                "format": "string"
-              },
-              "year_of_manufacture": {
-                "type": "integer",
-                "format": "YYYY"
-              },
-              "ready_to_drive": {
-                "type": "boolean",
-                "format": "1 or 0"
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Vehicle Request"
+    }
+  ],
+  "paths": {
+    "/vehicle": {
+      "post": {
+        "tags": [
+          "Vehicle Request"
+        ],
+        "summary": "Create a new vehicle",
+        "requestBody": {
+          "description": "Vehicle Request Post Object",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/VehicleRequestPostBody"
               }
             }
           }
-        }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "responses": {}
+      }
+    },
+    "/vehicle/{vehicle_id}": {
+      "put": {
+        "parameters": [
+          {
+            "name": "vehicle_id",
+            "in": "path",
+            "required": true,
+            "description": "ID of vehicle",
+            "type": "integer"
+          }
+        ],
+        "tags": [
+          "Vehicle Request"
+        ],
+        "summary": "Update a new vehicle",
+        "requestBody": {
+          "description": "Vehicle Request Post Object",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/VehicleRequestPostBody"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "responses": {}
+      },
+      "get": {
+        "parameters": [
+          {
+            "name": "vehicle_id",
+            "in": "path",
+            "required": true,
+            "description": "ID of vehicle",
+            "type": "integer"
+          }
+        ],
+        "tags": [
+          "Vehicle Request"
+        ],
+        "summary": "Get details of a vehicle",
+        "requestBody": {
+          "description": "Vehicle Request Post Object",
+        },
+        "produces": [
+          "application/json"
+        ],
+        "responses": {}
+      }
     }
+  },
+  "components": {
+    "schemas": {
+      "VehicleRequestPostBody": {
+        "type": "object",
+        "properties": {
+          "vehicle_name": {
+            "type": "string",
+            "format": "string"
+          },
+          "vehicle_brand": {
+            "type": "string",
+            "format": "string"
+          },
+          "vehicle_description": {
+            "type": "string",
+            "format": "string"
+          },
+          "year_of_manufacture": {
+            "type": "integer",
+            "format": "YYYY"
+          },
+          "ready_to_drive": {
+            "type": "boolean",
+            "format": "1 or 0"
+          }
+        }
+      }
+    }
+  }
 }
