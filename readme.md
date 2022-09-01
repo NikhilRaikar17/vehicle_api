@@ -58,9 +58,14 @@ pip -r install requirements.txt
 ### Step 4.
 Once the packages are installed, please initialise the database
 ```
-python manage.py db init
-python manage.py db migrate
-python manage.py db upgrade
+python manage.py shell
+```
+opens up a flask shell
+```
+from application.models import Vehicle
+from application import db
+db.create_all()
+exit()
 ```
 ### Step 5.
 Once the database is initialized, you can start the application
