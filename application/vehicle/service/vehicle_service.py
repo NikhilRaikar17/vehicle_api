@@ -6,7 +6,7 @@ sys.path.append(parentdir)
 from vehicle.entities.vehicle_entities import ValidVehicle
 from vehicle.helpers import vehicle_helpers
 
-def validate_vehicle(name,brand,description,year_of_manufacture,ready_to_drive):
+def validate_vehicle_info(name,brand,description,year_of_manufacture,ready_to_drive):
     """Validates whether the information sent conforms to proper vehicle"""
     try:        
         if not name:
@@ -49,7 +49,7 @@ def add(db,name,brand,description,year_of_manufacture,ready_to_drive):
         if duplicate_vehicle:
             raise Exception("Same name,brand and manufacture year of vehicle exists")
 
-        error,message,valid_vehicle = validate_vehicle(name,brand,description,year_of_manufacture,ready_to_drive)
+        error,message,valid_vehicle = validate_vehicle_info(name,brand,description,year_of_manufacture,ready_to_drive)
         if error:
             raise Exception(message)
 
@@ -71,11 +71,11 @@ def update(db,vehicle_id,name,brand,description,year_of_manufacture,ready_to_dri
         if not old_vehicle:
             raise Exception("Vehicle not found!")
         
-        duplicate_vehicle = vehicle_helpers.get_duplicate_vehicle(name,brand,year_of_manufacture)
+        duplicate_vehicle = vehicle_helpers.get_duplicate_vehicle(vehicle_id,name,brand,year_of_manufacture)
         if duplicate_vehicle:
             raise Exception("Same name,brand and manufacture year of vehicle exists")
         
-        error,message,valid_vehicle = validate_vehicle(db,name,brand,description,year_of_manufacture,ready_to_drive)
+        error,message,valid_vehicle = validate_vehicle_info(name,brand,description,year_of_manufacture,ready_to_drive)
         if error:
             raise Exception(message)
         
@@ -85,6 +85,7 @@ def update(db,vehicle_id,name,brand,description,year_of_manufacture,ready_to_dri
 
         return None, "Vehicle successfully updated!"
     except Exception as e:
+        print(e)
         message = e.args[0]
         if message:
             return True, message
@@ -113,3 +114,11 @@ def search(name,brand,year_of_manufacture,ready_to_drive):
         return False,'',vehicles_query
     except Exception as e:
         return True,'Search function is not working properly', None
+
+def get_vehicles():
+    """Get all vehicles present"""
+    return vehicle_helpers.get_all_vehicles().all()
+
+def get_vehicle(vehicle_id):
+    """Get single vehicle"""
+    return vehicle_helpers.get_all_vehicles().filter_by(id=vehicle_id).all()
