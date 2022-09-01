@@ -23,12 +23,13 @@ def status():
 def add_vehicle():
     """Adds a new vehicle"""
     try:
+        name = request.form.get('vehicle_name')
         brand = request.form.get('vehicle_brand')
         description = request.form.get('vehicle_description')
         year_of_manufacture = request.form.get('year_of_manufacture', type=int)
         ready_to_drive = request.form.get('ready_to_drive', type=bool)
 
-        error,message = vehicle_service.add(db,brand,description,year_of_manufacture,ready_to_drive)
+        error,message = vehicle_service.add(db,name,brand,description,year_of_manufacture,ready_to_drive)
         if error:
             raise Exception(message)
 
@@ -58,12 +59,13 @@ def add_vehicle():
 def update_vehicle():
     try:
         vehicle_id = request.args.get('id')
+        name = request.form.get('vehicle_name')
         brand = request.form.get('vehicle_brand')
         description = request.form.get('vehicle_description')
         year_of_manufacture = request.form.get('year_of_manufacture', type=int)
         ready_to_drive = request.form.get('ready_to_drive', type=bool)
 
-        error,message = vehicle_service.update(db,vehicle_id,brand,description,year_of_manufacture,ready_to_drive)
+        error,message = vehicle_service.update(db,vehicle_id,name,brand,description,year_of_manufacture,ready_to_drive)
         if error:
             raise Exception(message)
 
@@ -89,3 +91,9 @@ def update_vehicle():
                 "message":"Vehicle could not be updated!"
                 })
 
+@vehicle_api_blueprint.route('/vehicles', methods=['GET'])
+def get_all_vehicles():
+    """Gets all the vehicle information present"""
+    all_vehicles = Vehicle.query.all()
+    for vehicle in all_vehicles:
+        pass
