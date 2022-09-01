@@ -1,6 +1,7 @@
 from flask import jsonify, request
 import os
 import sys
+import json
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
@@ -11,8 +12,10 @@ from flask_sqlalchemy import SQLAlchemy
 from application import create_app,db
 
 
+
 app = create_app()
 db = SQLAlchemy(app)
+
 
 @vehicle_api_blueprint.route('/status', methods=['GET'])
 def status():
@@ -95,5 +98,4 @@ def update_vehicle():
 def get_all_vehicles():
     """Gets all the vehicle information present"""
     all_vehicles = Vehicle.query.all()
-    for vehicle in all_vehicles:
-        pass
+    return json.dumps(Vehicle.serialize_list(all_vehicles))
