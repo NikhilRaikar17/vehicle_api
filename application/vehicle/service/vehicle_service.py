@@ -61,12 +61,16 @@ def add(db,name,brand,description,year_of_manufacture,ready_to_drive):
             return True, message
         return True, "The vehicle could not be added to the database!"
 
-def update(db,vehicle_id,brand,description,year_of_manufacture,ready_to_drive):
+def update(db,vehicle_id,name,brand,description,year_of_manufacture,ready_to_drive):
     """Updates a vehicle"""
     try:
         old_vehicle = vehicle_helpers.get_vehicle_by_id(vehicle_id)
         if not old_vehicle:
             raise Exception("Vehicle not found!")
+        
+        duplicate_vehicle = vehicle_helpers.get_duplicate_vehicle(name,brand,year_of_manufacture)
+        if duplicate_vehicle:
+            raise Exception("Same name,brand and manufacture year of vehicle exists")
         
         error,message,valid_vehicle = validate_vehicle(db,brand,description,year_of_manufacture,ready_to_drive)
         if error:
