@@ -44,7 +44,7 @@ def add(db,name,brand,description,year_of_manufacture,ready_to_drive):
         
         duplicate_vehicle = vehicle_helpers.get_duplicate_vehicle(name,brand,year_of_manufacture)
         if duplicate_vehicle:
-            raise Exception("Same name and brand of vehicle exists")
+            raise Exception("Same name,brand and manufacture year of vehicle exists")
 
         error,message,valid_vehicle = validate_vehicle(brand,description,year_of_manufacture,ready_to_drive)
         if error:
