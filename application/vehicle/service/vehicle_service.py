@@ -90,3 +90,26 @@ def update(db,vehicle_id,name,brand,description,year_of_manufacture,ready_to_dri
             return True, message
         return True, "The vehicle could not be added to the database!"
     
+def search(name,brand,year_of_manufacture,ready_to_drive):
+    try:
+        vehicles_query = vehicle_helpers.get_all_vehicles()
+        if name:
+            vehicles_query = vehicle_helpers.get_vehicles_by_name(vehicles_query,name)
+        
+        if brand:
+            vehicles_query = vehicle_helpers.get_vehicles_by_brands(vehicles_query,brand)
+        
+        if year_of_manufacture:
+            vehicles_query = vehicle_helpers.get_vehicles_by_manufacturer_year(
+                                                                                vehicles_query,
+                                                                                year_of_manufacture
+                                                                                )
+        if ready_to_drive:
+            vehicles_query = vehicle_helpers.get_vehicles_by_ready_to_drive(
+                                                                            vehicles_query,
+                                                                            ready_to_drive
+                                                                            )
+
+        return False,'',vehicles_query
+    except Exception as e:
+        return True,'Search function is not working properly', None
