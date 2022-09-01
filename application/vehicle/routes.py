@@ -27,17 +27,14 @@ def add_vehicle():
         year_of_manufacture = request.form.get('year_of_manufacture', type=int)
         ready_to_drive = request.form.get('ready_to_drive', type=bool)
 
-        error,message,valid_vehicle = vehicle_service.validate_vehicle(brand,description,year_of_manufacture,ready_to_drive)
+        error,message = vehicle_service.add(db,brand,description,year_of_manufacture,ready_to_drive)
         if error:
             raise Exception(message)
 
-        new_vehicle = Vehicle(**vars(valid_vehicle))
-        db.session.add(new_vehicle)
-        db.session.commit()
         return jsonify({
                         "status": 200,
                         "Error": False,
-                        "message":"vehicle successfully created!"
+                        "message":message
                         })
 
     except Exception as e:
