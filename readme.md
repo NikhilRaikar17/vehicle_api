@@ -40,6 +40,17 @@ Vehicle-API
 ## Setup and Configuration
 To launch the application perform the following:
 
+### Database
+The database used in this application is PostgreSQL.
+This can be created and configured.
+In the config file a "DATABASE_HOME" environment variable is given
+this must be configured.
+
+An example DATABASE_HOME variable looks like this:
+```
+postgresql://<username>:<password>@localhost:5432/<database_name>"
+```
+
 ### Step 1.
 Download the source code and cd into it
 ```
